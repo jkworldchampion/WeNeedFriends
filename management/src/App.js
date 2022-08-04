@@ -1,6 +1,25 @@
 import React, { Component } from 'react';
-import Customer from './components/Customer'
+import Customer from './components/Customer';
 import './App.css';
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableHead from '@mui/material/TableHead';
+import TableBody from '@mui/material/TableBody';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import { withStyles } from '@mui'
+
+
+const styles = theme => ({
+	root: {
+		width: '100%',
+		marginTop: theme.spacing.unit * 3,
+		overflowX: "auto"
+	},
+	table: {
+		mainWidth: 1080
+	}
+})
 
 const customers = [{
 	'id' : 1,
@@ -20,35 +39,36 @@ const customers = [{
 },
 									 {
 	'id' : 3,
-	'image' : 'https://placeimg.com/64/64/3',
-	'name' : '나동빈',
-	'birthday' : '961212',
-	'gender' : '남자',
-	'job' : '프로그래머'	 
+	'image' : 'https://proxy.goorm.io/service/62e625b3963aff975fc24b76_d3uwCbw3tlLCJHYu880.run.goorm.io/9080/file/load/Ayoung.jpg?path=d29ya3NwYWNlJTJGVGFEYSUyRmNsb25lX2NvZGUlMkZtYW5hZ2VtZW50JTJGc3JjJTJGY29tcG9uZW50cyUyRkF5b3VuZy5qcGc=&docker_id=d3uwCbw3tlLCJHYu880&secure_session_id=OzerQejxcoY83HfWMzaH7nEh4pV1tjKS',
+	'name' : '이아영',
+	'birthday' : '010616',
+	'gender' : '여자',
+	'job' : '디자이너'	 
 									 }]
 
 class App extends Component {
 	render(){
+		const { classes } = this.props;
 		return (
-			<div>
-				{
-					customers.map(c => {
-						return (
-							<Customer
-								key={c.id}
-								id={c.id}
-								image={c.image}
-								name={c.name}
-								birthday={c.birthday}
-								gender={c.gender}
-								job={c.job}
-								/>
-						);
-					})
-				}
-			</div>
-		)
+			<Paper className={classes.root}>
+				<Table className={classes.table}>
+					<TableHead>
+						<TableRow>
+							<TableCell>번호</TableCell>
+							<TableCell>이미지</TableCell>
+							<TableCell>이름</TableCell>
+							<TableCell>생년월일</TableCell>
+							<TableCell>성별</TableCell>
+							<TableCell>직업</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{customers.map(c => { return ( <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} /> ); }) }
+					</TableBody>
+				</Table>
+			</Paper>
+		);
 	}
 }
 
-export default App;
+export default withStyles(styles)(App);
