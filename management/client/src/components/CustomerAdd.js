@@ -33,8 +33,17 @@ class CustomerAdd extends React.Component {
 		this.addCustomer()
 			.then((response) => {
 				console.log(response.data);
-		})
-			
+				this.props.stateRefresh();
+			})
+		// 저장하기를 한 이후에는 다시 값을 비워야함
+		this.setState({
+			file: null,
+			userName: '',
+			birthday: '',
+			gender: '',
+			job: '',
+			fileName: ''
+		})	
 	}
 	
 	addCustomer = () => {
