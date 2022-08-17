@@ -1,25 +1,98 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import Timeplan from './components/Timeplan';
+import planAdd from './components/planAdd';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import CircularProgress from '@mui/material/CircularProgress';
+import { styled } from '@mui/material/styles';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
+
+
+
+
+class App extends Component {
+	
+	state = {
+		plans: ""
+	}
+	
+	componentDidMount(){
+		this.callApi()
+			.then(res => this.setState({plans: res}))
+			.catch(err => console.log(err));
+	}
+	
+	callApi = async() => {
+		const response = await fetch('/api/plans');
+		const body = await response.json();
+		return body;
+	}
+	
+	render() {
+		return (
+			<div>
+				<TableContainer component={Paper}>
+					<Table sx={{ minWidth: 700 }} aria-label="customized table">
+						<TableHead>
+							<StyledTableRow>
+								<StyledTableCell>순번</StyledTableCell>
+								<StyledTableCell align="right">출발지</StyledTableCell>
+								<StyledTableCell align="right">도착지</StyledTableCell>
+								<StyledTableCell align="right">시간</StyledTableCell>
+								<StyledTableCell align="right">인원</StyledTableCell>
+								<StyledTableCell align="right">이름</StyledTableCell>
+							</StyledTableRow>
+						</TableHead>
+						<TableBody>
+							{this.state.plans ? this.state.plans.map(p => {
+								return (
+									<Timeplan 
+										key={p.id}
+										id={p.id}
+										departure={p.departure}
+										arrival={p.arrival}
+										time={p.time}
+										number={p.number}
+										name={p.name}
+									/>
+								);
+							}) : 
+							<StyledTableRow>
+								<StyledTableCell colSpan="6" align="center">
+										<CircularProgress />
+								</StyledTableCell>
+							</StyledTableRow>}
+						</TableBody>
+					</Table>
+				</TableContainer>	
+			</div>
+		);
+	}
 }
 
 export default App;
