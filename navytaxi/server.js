@@ -22,6 +22,10 @@ const connection = mysql.createConnection({
 });
 connection.connect();
 
+const multer = require('multer');
+const upload = multer({dest: './upload'});
+
+
 app.get('/api/plans', (req, res) => {
 	connection.query(
 		"SELECT * FROM PLAN",
@@ -31,23 +35,23 @@ app.get('/api/plans', (req, res) => {
 	);
 });
 
-app.post('/api/plans', (req, res) => {
+// 과연 이것이 해결책일까?
+app.use('/text', express.static('./upload'));
+app.use(express.json()); 
+app.post('/api/plans', upload.none(), (req, res) => {   
 	let sql = 'INSERT INTO PLAN VALUES (null, ?, ?, ?, ?, ?)';
 	let departure = req.body.departure;
 	let arrival = req.body.arrival;
 	let time = req.body.time;
 	let number = req.body.number;
 	let name = req.body.name;
-	console.log(departure);
-	console.log(arrival);
-	console.log(time);
-	console.log(number);
-	console.log(name);
 	let params = [departure, arrival, time, number, name];
 	connection.query(sql, params, 
 		(err, rows, fields) => {
 			res.send(rows);
-		})
+		}
+	);
 });
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
