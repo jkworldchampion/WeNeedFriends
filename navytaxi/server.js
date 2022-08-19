@@ -28,18 +28,17 @@ const upload = multer({dest: './upload'});
 
 app.get('/api/plans', (req, res) => {
 	connection.query(
-		"SELECT * FROM PLAN",
+		"SELECT * FROM PLAN WHERE isDeleted = 0",
 		(err, rows, fields) => {
 			res.send(rows);
 		}
 	);
 });
 
-// 과연 이것이 해결책일까?
 app.use('/text', express.static('./upload'));
 app.use(express.json()); 
 app.post('/api/plans', upload.none(), (req, res) => {   
-	let sql = 'INSERT INTO PLAN VALUES (null, ?, ?, ?, ?, ?)';
+	let sql = 'INSERT INTO PLAN VALUES (null, ?, ?, ?, ?, ?, now(), 0)';
 	let departure = req.body.departure;
 	let arrival = req.body.arrival;
 	let time = req.body.time;
@@ -51,6 +50,16 @@ app.post('/api/plans', upload.none(), (req, res) => {
 			res.send(rows);
 		}
 	);
+});
+
+app.delete('/api/plans/:id', (req, res) => {
+	let sql = 'UPDATE PLAN SET isDeleted = 1 WHERE id = ?';
+	let params = [req.params.id];
+	connection.query(sql, params,
+		(err, rows, fields) => {
+			res.send(rows);
+		}
+	)
 });
 
 
