@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Timeplan from './components/Timeplan';
-import planAdd from './components/planAdd'
+import PlanAdd from './components/PlanAdd';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -43,6 +43,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			plans: '',
 			departure: '',
 			arrival: '',
 			time: '',
@@ -90,10 +91,13 @@ class App extends Component {
 	}
 	
 	
-	
-	
-	state = {
-		plans: ""
+	stateRefresh = () => {   // 상태를 다시 초기화 한 뒤, 고객 값을 불러옴
+		this.setState({
+			plans: ''
+		});
+		this.callApi()
+			.then(res => this.setState({plans: res}))
+			.catch(err => console.log(err));
 	}
 	
 	componentDidMount(){
@@ -107,26 +111,27 @@ class App extends Component {
 		const body = await response.json();
 		return body;
 	}
-	
-	render() {
-		return (
+	//
+	render() { //
+		return (//
 			<div>
 				<TableContainer component={Paper}>
 					<Table sx={{ minWidth: 700 }} aria-label="customized table">
 						<TableHead>
 							<StyledTableRow>
-								<StyledTableCell>순번</StyledTableCell>
 								<StyledTableCell align="right">출발지</StyledTableCell>
 								<StyledTableCell align="right">도착지</StyledTableCell>
 								<StyledTableCell align="right">시간</StyledTableCell>
 								<StyledTableCell align="right">인원</StyledTableCell>
 								<StyledTableCell align="right">이름</StyledTableCell>
+								<StyledTableCell align="right">설정</StyledTableCell>
 							</StyledTableRow>
 						</TableHead>
 						<TableBody>
 							{this.state.plans ? this.state.plans.map(p => {
 								return (
 									<Timeplan 
+										stateRefresh={this.stateRefresh}
 										key={p.id}
 										id={p.id}
 										departure={p.departure}
@@ -145,15 +150,7 @@ class App extends Component {
 						</TableBody>
 					</Table>
 				</TableContainer>	
-				<form onSubmit={this.handelFormSubmit}>
-					<h1>계획 추가</h1>
-					출발지: <input type="text" name="departure" value={this.state.departure} onChange={this.handleValueChange} /><br/>
-					도착(목적)지: <input type="text" name="arrival" value={this.state.arrival} onChange={this.handleValueChange} /><br/> 
-					시간: <input type="text" name="time" value={this.state.time} onChange={this.handleValueChange} /><br/>
-					인원: <input type="text" name="number" value={this.state.number} onChange={this.handleValueChange} /><br/>
-					이름: <input type="text" name="name" value={this.state.name} onChange={this.handleValueChange} /><br/>
-					<button type="submit"> 추가하기</button>
-				</form>
+				<PlanAdd stateRefresh={this.stateRefresh} />
 			</div>
 		);
 	}
