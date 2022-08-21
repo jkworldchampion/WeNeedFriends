@@ -34,6 +34,18 @@ app.get('/api/plans', (req, res) => {
 		}
 	);
 });
+ 
+// 내가 만든, 같은 택시 타는 사람들에 대한 정보 불러오는 api
+// TOGETHER는 이름 전화번호 출발지 도착시간 으로 구성
+app.get('/api/planid', (req, res) => {
+	let sql = 'SELECT * FROM TOGETHER WHERE id = ?';
+	let id = req.body.id;
+	connection.query(sql, id,
+		(err, rows, fields) => {
+			res.send(rows);
+		}
+	);
+});
 
 app.use('/text', express.static('./upload'));
 app.use(express.json()); 
