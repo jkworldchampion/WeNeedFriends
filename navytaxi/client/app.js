@@ -20,6 +20,9 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Collapse from '@mui/material/Collapse';
 import './App.css';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -99,7 +102,6 @@ const darkTheme = createTheme({
 
 class App extends Component {
 	
-	
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -142,16 +144,16 @@ class App extends Component {
 				return (c.departure.indexOf(this.state.searchKeyword) + c.arrival.indexOf(this.state.searchKeyword)) > -2;
 			});
 			return data.map((p) => {
-				return <Timeplan 
-											stateRefresh={this.stateRefresh}
-											key={p.id}
-											id={p.id}
-											departure={p.departure}
-											arrival={p.arrival}
-											time={p.time}
-											number={p.number}
-											name={p.name}
-										/> 
+				return  <Timeplan 
+									stateRefresh={this.stateRefresh}
+									key={p.id}
+									id={p.id}
+									departure={p.departure}
+									arrival={p.arrival}
+									time={p.time}
+									number={p.number}
+									name={p.name}
+								/> 
 			})
 		}
 		
@@ -191,6 +193,7 @@ class App extends Component {
 						<Table sx={{ minWidth: 500 }} aria-label="customized table">
 							<TableHead>
 								<StyledTableRow>
+									<StyledTableCell width='10'>세부사항</StyledTableCell>
 									<StyledTableCell align="right">출발지</StyledTableCell>
 									<StyledTableCell align="right">도착지</StyledTableCell>
 									<StyledTableCell align="right">시간</StyledTableCell>
