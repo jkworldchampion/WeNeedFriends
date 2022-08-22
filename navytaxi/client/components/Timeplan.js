@@ -37,8 +37,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function Row(props: { row: ReturnType<typeof createData> }) {
-	const { row } = this.props;
+function Row(props) {
+	const { row } = props;
 	const [open, setOpen] = React.useState(false);
 	
 	return (
@@ -108,9 +108,9 @@ class Timeplan extends React.Component {
 					<IconButton
 					aria-label="expand row"
 					size="small"
-					onClick={() => setOpen(!open)}
+					onClick={() => this.state.setOpen(!this.state.open)}
 				>
-					{open ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+					{this.state.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
 				</IconButton>
 				</StyledTableCell>
 				<StyledTableCell align="right">{this.props.departure}</StyledTableCell>
