@@ -65,7 +65,7 @@ function Row(props) {
 				<Collapse in={open} timeout="auto" unmountOnExit>
 					<Box sx={{ margin: 1 }}>
 						<Typography variant="h6" gutterBottom component="div">
-							같이타는 사람
+							Together
 						</Typography>
 					<Table size="small" aria-label="together">
 						<TableHead>
@@ -103,23 +103,69 @@ class Timeplan extends React.Component {
 	
 	render() {		
 		return (
-			<StyledTableRow>
-				<StyledTableCell width="10">
-					<IconButton
-					aria-label="expand row"
-					size="small"
-					onClick={() => this.state.setOpen(!this.state.open)}
-				>
-					{this.state.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-				</IconButton>
-				</StyledTableCell>
-				<StyledTableCell align="right">{this.props.departure}</StyledTableCell>
-				<StyledTableCell align="right">{this.props.arrival}</StyledTableCell>
-				<StyledTableCell align="right">{this.props.time}</StyledTableCell>
-				<StyledTableCell align="right">{this.props.number}</StyledTableCell>
-				<StyledTableCell align="right">{this.props.name}</StyledTableCell>
-				<StyledTableCell align="center"><PlanDelete stateRefresh={this.props.stateRefresh} id={this.props.id} /></StyledTableCell> 
-			</StyledTableRow>
+			<React.Fragment>
+				<StyledTableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+					<StyledTableCell>
+						<IconButton
+							aria-label="expand row"
+							size="small"
+							onClick={() => setOpen(!open)}
+						>
+							{open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+						</IconButton>
+					</StyledTableCell>
+					<StyledTableCell align="right">{this.props.departure}</StyledTableCell>
+					<StyledTableCell align="right">{this.props.arrival}</StyledTableCell>
+					<StyledTableCell align="right">{this.props.time}</StyledTableCell>
+					<StyledTableCell align="right">{this.props.number}</StyledTableCell>
+					<StyledTableCell align="right">{this.props.name}</StyledTableCell>
+					<StyledTableCell align="center"><PlanDelete stateRefresh={this.props.stateRefresh} id={this.props.id} /></StyledTableCell> 
+				</StyledTableRow>
+				<StyledTableRow>
+					<TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
+						<Collapse in={open} timeout="auto" unmountOnExit>
+							<Box sx={{ margin: 1 }}>
+								<Typography variant="h6" gutterBottom component="div">
+									Together
+								</Typography>
+							<Table size="small" aria-label="together">
+								<TableHead>
+									<TableRow>
+										<TableCell>이름</TableCell>
+										<TableCell>전화번호</TableCell>
+										<TableCell>출발지 도착시간</TableCell>
+									</TableRow>
+								</TableHead>	
+								<TableBody>
+									<TableRow>
+										<TableCell>이름이다</TableCell>
+										<TableCell>전화번호다</TableCell>
+										<TableCell>출발지 도착시간이다</TableCell>
+									</TableRow>
+								</TableBody>
+							</Table>
+							</Box>
+						</Collapse>
+					</TableCell>
+				</StyledTableRow>
+			</React.Fragment>
+			// <StyledTableRow>
+			// 	<StyledTableCell width="10">
+			// 		<IconButton
+			// 		aria-label="expand row"
+			// 		size="small"
+			// 		onClick={() => this.state.setOpen(!this.state.open)}
+			// 	>
+			// 		{this.state.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+			// 	</IconButton>
+			// 	</StyledTableCell>
+			// 	<StyledTableCell align="right">{this.props.departure}</StyledTableCell>
+			// 	<StyledTableCell align="right">{this.props.arrival}</StyledTableCell>
+			// 	<StyledTableCell align="right">{this.props.time}</StyledTableCell>
+			// 	<StyledTableCell align="right">{this.props.number}</StyledTableCell>
+			// 	<StyledTableCell align="right">{this.props.name}</StyledTableCell>
+			// 	<StyledTableCell align="center"><PlanDelete stateRefresh={this.props.stateRefresh} id={this.props.id} /></StyledTableCell> 
+			// </StyledTableRow>
 		);
 	}
 }
