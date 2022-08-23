@@ -96,9 +96,25 @@ class Timeplan extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			open: false,
-			setOpen: false
+			open: false
 		}
+	}
+	
+	handleClickOpen = () => {
+		this.setState({
+			open: true
+		});
+	}
+	
+	handleClose = () => {
+		this.setState({
+			departure: '',
+			arrival: '',
+			time: '',
+			number: '',
+			name: '',
+			open: false
+		})
 	}
 	
 	render() {		
@@ -109,7 +125,7 @@ class Timeplan extends React.Component {
 						<IconButton
 							aria-label="expand row"
 							size="small"
-							onClick={() => setOpen(!open)}
+							onClick={this.handleClickOpen}
 						>
 							{open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
 						</IconButton>
