@@ -6,3 +6,6 @@
 Front : React  
 backend : node.js  
 DB : mysql
+
+
+여기로 접속!! https://weneedfriends.run.goorm.io/
