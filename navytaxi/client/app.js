@@ -141,7 +141,7 @@ class App extends Component {
 	render() {
 		const filteredComponents = (data) => {
 			data = data.filter((c) => {
-				return (c.departure.indexOf(this.state.searchKeyword) + c.arrival.indexOf(this.state.searchKeyword)) > -2;
+				return (c.departure.indexOf(this.state.searchKeyword) + c.arrival.indexOf(this.state.searchKeyword) + c.name.indexOf(this.state.searchKeyword)) > -3;
 			});
 			return data.map((p) => {
 				return  <Timeplan 
@@ -196,7 +196,7 @@ class App extends Component {
 									<StyledTableCell width='10'>세부사항</StyledTableCell>
 									<StyledTableCell align="right">출발지</StyledTableCell>
 									<StyledTableCell align="right">도착지</StyledTableCell>
-									<StyledTableCell align="right">시간</StyledTableCell>
+									<StyledTableCell align="right">출발시간</StyledTableCell>
 									<StyledTableCell align="right">인원</StyledTableCell>
 									<StyledTableCell align="right">이름</StyledTableCell>
 									<StyledTableCell align="center">설정</StyledTableCell>
