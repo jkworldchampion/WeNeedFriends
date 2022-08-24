@@ -100,22 +100,12 @@ class Timeplan extends React.Component {
 		}
 	}
 	
-	handleClickOpen = () => {
+	handleClick = () => {
 		this.setState({
-			open: true
+			open: !this.state.open
 		});
 	}
 	
-	handleClose = () => {
-		this.setState({
-			departure: '',
-			arrival: '',
-			time: '',
-			number: '',
-			name: '',
-			open: false
-		})
-	}
 	
 	render() {		
 		return (
@@ -125,9 +115,9 @@ class Timeplan extends React.Component {
 						<IconButton
 							aria-label="expand row"
 							size="small"
-							onClick={this.handleClickOpen}
+							onClick={this.handleClick}
 						>
-							{open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+							{this.state.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
 						</IconButton>
 					</StyledTableCell>
 					<StyledTableCell align="right">{this.props.departure}</StyledTableCell>
@@ -139,7 +129,7 @@ class Timeplan extends React.Component {
 				</StyledTableRow>
 				<StyledTableRow>
 					<TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
-						<Collapse in={open} timeout="auto" unmountOnExit>
+						<Collapse in={this.state.open} timeout="auto" unmountOnExit>
 							<Box sx={{ margin: 1 }}>
 								<Typography variant="h6" gutterBottom component="div">
 									Together
