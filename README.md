@@ -8,4 +8,5 @@ backend : node.js
 DB : mysql
 
 
-여기로 접속!! https://weneedfriends.run.goorm.io/
+여기로 접속!! https://weneedfriends.run.goorm.io/  
+안되면,, 서버가 꺼져있는 겁니다(goormide)
