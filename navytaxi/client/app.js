@@ -23,8 +23,10 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Collapse from '@mui/material/Collapse';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import './App.css';
 
+// 테이블 속성 값
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     //backgroundColor: theme.palette.common.black,
@@ -37,6 +39,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
+// 테이블 속성 값
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
 		// backgroundColor: "FFEAD8"
@@ -48,6 +51,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+// 검색 부분 속성값
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -63,6 +67,7 @@ const Search = styled('div')(({ theme }) => ({
   },
 }));
 
+// 검색 아이콘 속성값
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
@@ -73,6 +78,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center',
 }));
 
+// 검색 인풋 부분 속성값 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
@@ -90,6 +96,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+// 다크 테마 색
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -99,18 +106,21 @@ const darkTheme = createTheme({
   },
 });
 
-
+// 창에 보여줌
 class App extends Component {
 	
+	// 기본 props
 	constructor(props) {
 		super(props);
 		this.state = {
 			plans: '',
-			searchKeyword: ''
+			searchKeyword: '',
+			people: ''
 		}
 	}
 	
-	stateRefresh = () => {   // 상태를 다시 초기화 한 뒤, 고객 값을 불러옴
+	// 상태를 다시 초기화 한 뒤, 고객 값을 불러옴
+	stateRefresh = () => {
 		this.setState({
 			plans: '',
 			searchKeyword: ''
@@ -120,7 +130,7 @@ class App extends Component {
 			.catch(err => console.log(err));
 	}
 	
-	componentDidMount(){
+	componentDidMount() {
 		this.callApi()
 			.then(res => this.setState({plans: res}))
 			.catch(err => console.log(err));
@@ -132,6 +142,20 @@ class App extends Component {
 		return body;
 	}
 	
+	//각 계획에 대한 사람들 정보 불러오기
+	// componentDidMountPeople(){
+	// 	this.callpeople()
+	// 		.then(res => this.setState({people: res}))
+	// 		.catch(err => console.log(err));
+	// }
+	
+	callpeople = async() => {
+		const response = await fetch('/api/planid');
+		const body = await response.json();
+		return body;
+	}
+	
+	
 	handleValueChange = (e) => {
 		let nextState = {};
 		nextState[e.target.name] = e.target.value;
@@ -141,7 +165,9 @@ class App extends Component {
 	render() {
 		const filteredComponents = (data) => {
 			data = data.filter((c) => {
-				return (c.departure.indexOf(this.state.searchKeyword) + c.arrival.indexOf(this.state.searchKeyword) + c.name.indexOf(this.state.searchKeyword)) > -3;
+				return (c.departure.indexOf(this.state.searchKeyword) +   // 출발지 속성
+								c.arrival.indexOf(this.state.searchKeyword) +     // 도착지 속성
+								c.name.indexOf(this.state.searchKeyword)) > -3;   // 이름 속성
 			});
 			return data.map((p) => {
 				return  <Timeplan 
