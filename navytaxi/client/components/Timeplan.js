@@ -10,10 +10,10 @@ import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
+//import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
+//import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
@@ -39,38 +39,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const pp = [
-	{
-		"id":1,
-		"name":"박주환",
-		"phonenumber":"010-7110-8128",
-		"time":"1805"
-	},
-	{
-		"id":1,
-		"name":"정의철",
-		"phonenumber":"010-4039-3970",
-		"time":"1810"
-	},
-	{
-		"id":2,
-		"name":"황동원",
-		"phonenumber":"010-2736-1234",
-		"time":"1500"
-	},
-	{
-		"id":2,
-		"name":"김김김",
-		"phonenumber":"010-1456-1234",
-		"time":"1500"
-	},
-	{
-		"id":2,
-		"name":"박박박",
-		"phonenumber":"010-1478-5534",
-		"time":"1500"
-	}
-]
 
 class Timeplan extends React.Component {
 	
@@ -89,7 +57,13 @@ class Timeplan extends React.Component {
 	}
 	
 	// 각 계획에 대한 사람들 정보 불러오기	
-	componentDidMountPeople() {
+ 	stateRef = () => {
+		this.callpeople()
+			.then(res => this.setState({people: res}))
+			.catch(err => console.log(err));
+	}
+	
+	componentDidMount() {
 		this.callpeople()
 			.then(res => this.setState({people: res}))
 			.catch(err => console.log(err));
@@ -137,24 +111,18 @@ class Timeplan extends React.Component {
 									</TableRow>
 								</TableHead>	
 								<TableBody>
-									<div>
-										{this.props.people.map((p, index) => {
-											let i = Math.floor(Math.random() * 1000+1)
-											return (
-												<Withpeople
-													key={i}
-													name={p.name}
-													phonenumber={p.phonenumber}
-													time={p.time}
-												/>
-											);
-										})}
-									</div>
-									<TableRow>
-										<TableCell>이름이다</TableCell>
-										<TableCell>전화번호다</TableCell>
-										<TableCell>출발지 도착시간이다</TableCell>
-									</TableRow>
+									{this.state.people ? this.state.people.map((p, index) => {
+										let i = Math.floor(Math.random() * 1000+1)
+										return (
+											<Withpeople
+												stateRef={this.stateRef}
+												key={i}
+												name={p.name}
+												phonenumber={p.phonenumber}
+												time={p.time}
+											/>
+										)}
+									): ""}
 								</TableBody>
 							</Table>
 							</Box>
