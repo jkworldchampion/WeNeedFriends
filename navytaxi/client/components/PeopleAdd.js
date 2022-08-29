@@ -69,6 +69,7 @@ class PeopleAdd extends React.Component {
 	addPeople = () => {
 		const url = '/api/planid';
 		const formData = new FormData();
+		formData.append('id', this.props.id);
 		formData.append('name', this.state.name);
 		formData.append('phonenumber', this.state.phonenumber);
 		formData.append('time', this.state.time);
