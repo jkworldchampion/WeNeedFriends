@@ -25,15 +25,15 @@ class PeopleAdd extends React.Component {
 			name: '',   // 입력받는 이름
 			phonenumber: '',  // 전화번호
 			time: '',   // 출발지 도착시간
-			open: false, // 해당 페이지 열림변수
+			peopleopen: false, // 해당 페이지 열림변수
 			value: ''
 		}
 	}
 	
 	handleClickOpen = () => {
 		this.setState({
-			open: true
-		});
+			peopleopen: true
+		})
 	}
 	
 	handleClose = () => {
@@ -41,7 +41,7 @@ class PeopleAdd extends React.Component {
 			name: '',   
 			phonenumber: '', 
 			time: '', 
-			open: false
+			peopleopen: false
 		})
 	}
 	
@@ -62,7 +62,7 @@ class PeopleAdd extends React.Component {
 			name: '',   
 			phonenumber: '', 
 			time: '', 
-			open: false
+			peopleopen: false
 		})
 	}
 	
@@ -84,16 +84,18 @@ class PeopleAdd extends React.Component {
 		return (
 			<div>
 				<ThemeProvider theme={theme}>
-					<Button variant="contained" color="neutral" OnClick={this.handleClickOpen}>
+					<Button variant="contained" color="neutral" onClick={this.handleClickOpen}>
 						같이 타기
 					</Button>
 				</ThemeProvider>
-				<Dialog open={this.state.open} onClose={this.handleClose}>
+				<Dialog open={this.state.peopleopen} onClose={this.handleClose}>
 					<DialogTitle align="center">내 정보 입력</DialogTitle>
 					<DialogContent>
 						<br/>
 						<TextField label="이름" type="text" name="name" value={this.state.departure} onChange={this.handleValueChange} /><br/>
+						<br/>
 						<TextField label="전화번호" type="text" name="phonenumber" value={this.state.phonenumber} onChange={this.handleValueChange} /><br/>
+						<br/>
 						<TextField label="출발지 도착시간" type="text" name="time" value={this.state.time} onChange={this.handleValueChange} /><br/>
 					</DialogContent>
 					<DialogActions>
