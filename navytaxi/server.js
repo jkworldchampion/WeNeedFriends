@@ -46,6 +46,16 @@ app.get('/api/planid', (req, res) => {
 	);
 });
 
+// 여기는 추후에 고칠 예정
+// app.get('/api/planid', upload.none(), (req, res) => {
+// 	let sql = 'SELECT * FROM TOGETHER WHERE id = ?';
+// 	let id = req.body.id;
+// 	connection.query(sql, id,
+// 		(err, rows, fields) => {
+// 		res.send(rows);
+// 	})
+// })
+
 app.use('/text', express.static('./upload'));
 app.use(express.json()); 
 app.post('/api/plans', upload.none(), (req, res) => {   
@@ -71,6 +81,20 @@ app.delete('/api/plans/:id', (req, res) => {
 			res.send(rows);
 		}
 	)
+});
+
+app.post('/api/planid', upload.none(), (req, res) => {
+	let sql = 'INSERT INTO TOGETHER VALUES (?, ?, ?, ?)';  // 요청한 plan의 id, name, phonenumber, time
+	let id = req.body.id;
+	let name = req.body.name;
+	let phonenumber = req.body.phonenumber;
+	let time = req.body.time;
+	let params = [id, name, phonenumber, time];
+	connection.query(sql, params, 
+		(err, rows, fields) => {
+			res.send(rows);
+		}
+	);
 });
 
 
