@@ -177,7 +177,6 @@ class App extends Component {
 									departure={p.departure}
 									arrival={p.arrival}
 									time={p.time}
-									number={p.number}
 									name={p.name}
 								/> 
 			})
@@ -223,7 +222,6 @@ class App extends Component {
 									<StyledTableCell align="right">출발지</StyledTableCell>
 									<StyledTableCell align="right">도착지</StyledTableCell>
 									<StyledTableCell align="right">출발시간</StyledTableCell>
-									<StyledTableCell align="right">인원</StyledTableCell>
 									<StyledTableCell align="right">이름</StyledTableCell>
 									<StyledTableCell align="center">설정</StyledTableCell>
 								</StyledTableRow>
@@ -233,7 +231,7 @@ class App extends Component {
 									filteredComponents(this.state.plans) :
 								<StyledTableRow>
 									<StyledTableCell colSpan="6" align="center">
-											<CircularProgress />
+										<CircularProgress />
 									</StyledTableCell>
 								</StyledTableRow>}
 							</TableBody>
