@@ -11,8 +11,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     neutral: {
-      main: '#1976d2',
-      contrastText: '#fff',
+      main: '#74A8B3',
+      contrastText: '#FFEAD8',
     },
   },
 });
@@ -99,10 +99,12 @@ class PeopleAdd extends React.Component {
 						<br/>
 						<TextField label="출발지 도착시간" type="text" name="time" value={this.state.time} onChange={this.handleValueChange} /><br/>
 					</DialogContent>
-					<DialogActions>
-						<Button variant="contained" color="primary" onClick={this.handleFormSubmit}>추가</Button>
-						<Button variant="outlined" color="primary" onClick={this.handleClose}>닫기</Button>
-					</DialogActions>
+					<ThemeProvider theme={theme}>
+						<DialogActions>
+							<Button variant="contained" color="neutral" onClick={this.handleFormSubmit}>추가</Button>
+							<Button variant="outlined" color="neutral" onClick={this.handleClose}>닫기</Button>
+						</DialogActions>
+					</ThemeProvider>
 				</Dialog>
 			</div>
 		)
