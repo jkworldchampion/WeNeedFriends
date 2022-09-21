@@ -18,3 +18,5 @@ goormide 에 pm2를 이용해 항상 켜두기를 하고 있다.
 
 다음은 완성된 화면
 ![myapp](https://user-images.githubusercontent.com/83493949/187597574-7b48e0a9-229b-430b-9681-b14e924932c1.png)
+
+앞으로 update를 통해 heroku에 배포해 항상 열릴 수 있게 해보아야겠다.!!
